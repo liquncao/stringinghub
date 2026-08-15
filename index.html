@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <title>Club Racket Stringing</title>
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --ink:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --accent:#111827;
+      --soft:#eef2f7;
+      --success:#0f766e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+    .shell{
+      max-width:680px;
+      margin:0 auto;
+      padding:18px 14px 40px;
+    }
+    .hero{
+      background:linear-gradient(145deg,#111827,#273244);
+      color:#fff;
+      border-radius:22px;
+      padding:24px 20px;
+      box-shadow:0 12px 30px rgba(17,24,39,.12);
+      margin-bottom:14px;
+    }
+    .eyebrow{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      opacity:.72;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    h1{
+      font-size:30px;
+      line-height:1.05;
+      margin:0 0 10px;
+      letter-spacing:-.03em;
+    }
+    .hero p{
+      margin:0;
+      color:rgba(255,255,255,.78);
+      line-height:1.45;
+      font-size:15px;
+    }
+    .mini{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin:12px 0;
+      box-shadow:0 4px 14px rgba(17,24,39,.04);
+    }
+    .section-title{
+      font-size:16px;
+      margin:0 0 4px;
+      font-weight:800;
+    }
+    .section-note{
+      color:var(--muted);
+      font-size:13px;
+      margin:0 0 15px;
+      line-height:1.4;
+    }
+    label{
+      display:block;
+      font-size:13px;
+      font-weight:700;
+      margin:14px 0 7px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding:13px 13px;
+      border:1px solid #d7dce2;
+      border-radius:12px;
+      background:#fff;
+      color:var(--ink);
+      font:inherit;
+      outline:none;
+      transition:.15s ease;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color:#7c8592;
+      box-shadow:0 0 0 3px rgba(17,24,39,.06);
+    }
+    textarea{min-height:92px; resize:vertical}
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .choice-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin-top:8px;
+    }
+    .choice input{display:none}
+    .choice label{
+      margin:0;
+      min-height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:11px;
+      border:1px solid #d7dce2;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      background:#fff;
+    }
+    .choice input:checked + label{
+      background:#111827;
+      color:#fff;
+      border-color:#111827;
+    }
+    .switchline{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-top:6px;
+      background:var(--soft);
+      border-radius:12px;
+      padding:12px;
+    }
+    .switchline input{
+      width:18px;
+      height:18px;
+      margin-top:1px;
+      flex:0 0 auto;
+    }
+    .switchline label{
+      margin:0;
+      font-weight:700;
+      line-height:1.35;
+    }
+    .switchline small{
+      display:block;
+      font-weight:400;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .advice{
+      background:#f8fafc;
+      border-left:4px solid #111827;
+      padding:12px 13px;
+      border-radius:10px;
+      color:#374151;
+      font-size:13px;
+      line-height:1.45;
+      margin-top:12px;
+    }
+    .submit{
+      position:sticky;
+      bottom:10px;
+      margin-top:16px;
+      z-index:5;
+    }
+    button{
+      width:100%;
+      border:0;
+      border-radius:14px;
+      background:#111827;
+      color:#fff;
+      padding:15px 16px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(17,24,39,.18);
+    }
+    button:active{transform:translateY(1px)}
+    .secondary{
+      margin-top:9px;
+      background:#fff;
+      color:#111827;
+      border:1px solid #d7dce2;
+      box-shadow:none;
+      font-size:14px;
+    }
+    .footer{
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      padding:12px 10px 0;
+      line-height:1.5;
+    }
+    .hidden{display:none}
+    .success{
+      color:var(--success);
+      font-weight:700;
+      font-size:13px;
+      margin-top:10px;
+      text-align:center;
+    }
+    @media(max-width:520px){
+      .row{grid-template-columns:1fr}
+      .choice-grid{grid-template-columns:1fr 1fr}
+      h1{font-size:27px}
+      .hero{padding:21px 18px}
+      .card{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">Club Racket Service</div>
+      <h1>Book a restring in under a minute.</h1>
+      <p>Drop off your racket, tell us what you need, and we’ll keep your setup on file for next time.</p>
+      <div class="mini">
+        <span class="pill">Junior friendly</span>
+        <span class="pill">String advice</span>
+        <span class="pill">Drop-off / collection</span>
+      </div>
+    </section>
+
+    <form id="bookingForm">
+      <section class="card">
+        <h2 class="section-title">1. Player details</h2>
+        <p class="section-note">So we know whose racket it is and how to contact you.</p>
+
+        <label for="player">Player name *</label>
+        <input id="player" name="player" required placeholder="e.g. Dylan Cao" />
+
+        <div class="row">
+          <div>
+            <label for="age">Player age</label>
+            <input id="age" name="age" inputmode="numeric" placeholder="e.g. 15" />
+          </div>
+          <div>
+            <label for="contact">Parent / member contact *</label>
+            <input id="contact" name="contact" required placeholder="Name or mobile number" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">2. Racket</h2>
+        <p class="section-note">You only need to give us what you know.</p>
+
+        <div class="row">
+          <div>
+            <label for="brand">Brand</label>
+            <input id="brand" name="brand" placeholder="Head, Wilson, Yonex..." />
+          </div>
+          <div>
+            <label for="model">Model</label>
+            <input id="model" name="model" placeholder="e.g. Speed MP" />
+          </div>
+        </div>
+
+        <label for="racketCount">Number of rackets</label>
+        <select id="racketCount" name="racketCount">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4+</option>
+        </select>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">3. What would you like?</h2>
+        <p class="section-note">If you’re unsure, choose “Recommend for me”.</p>
+
+        <div class="choice-grid">
+          <div class="choice">
+            <input type="radio" id="same" name="service" value="Same setup as last time" checked />
+            <label for="same">Same as last time</label>
+          </div>
+          <div class="choice">
+            <input type="radio" id="recommend" name="service" value="Recommend a setup" />
+            <label for="recommend">Recommend for me</label>
+          </div>
+          <div class="choice">
+            <input type="radio" id="own" name="service" value="Use my own string" />
+            <label for="own">I have my own string</label>
+          </div>
+          <div class="choice">
+            <input type="radio" id="specific" name="service" value="Specific string and tension" />
+            <label for="specific">I know my setup</label>
+          </div>
+        </div>
+
+        <div id="setupFields" class="hidden">
+          <label for="string">String / gauge</label>
+          <input id="string" name="string" placeholder="e.g. Head Lynx 1.25" />
+
+          <div class="row">
+            <div>
+              <label for="mains">Mains tension</label>
+              <input id="mains" name="mains" placeholder="e.g. 22 kg" />
+            </div>
+            <div>
+              <label for="crosses">Crosses tension</label>
+              <input id="crosses" name="crosses" placeholder="e.g. 22 kg" />
+            </div>
+          </div>
+        </div>
+
+        <div id="adviceFields" class="hidden">
+          <label for="breakFrequency">How often are strings breaking?</label>
+          <select id="breakFrequency" name="breakFrequency">
+            <option value="">Choose one</option>
+            <option>Less than 5 hours</option>
+            <option>5–10 hours</option>
+            <option>10–20 hours</option>
+            <option>Rarely</option>
+            <option>Not sure</option>
+          </select>
+
+          <label for="priority">What matters most?</label>
+          <select id="priority" name="priority">
+            <option value="">Choose one</option>
+            <option>Comfort / arm friendliness</option>
+            <option>Control</option>
+            <option>Spin</option>
+            <option>Durability</option>
+            <option>Power</option>
+            <option>Not sure — please advise</option>
+          </select>
+
+          <div class="advice">
+            For junior players we’ll take age, playing level, breakage rate and comfort into account before recommending a setup.
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">4. Timing & collection</h2>
+        <p class="section-note">Tell us when you need the racket back.</p>
+
+        <label for="needed">Needed by</label>
+        <input id="needed" name="needed" type="date" />
+
+        <label for="handover">Handover</label>
+        <select id="handover" name="handover">
+          <option>Drop off at the club</option>
+          <option>Give to Bola after coaching</option>
+          <option>Arrange directly</option>
+        </select>
+
+        <label for="notes">Anything else?</label>
+        <textarea id="notes" name="notes" placeholder="Tournament coming up, arm discomfort, strings moving, breaking in the centre, etc."></textarea>
+
+        <div class="switchline">
+          <input type="checkbox" id="saveSetup" name="saveSetup" checked />
+          <label for="saveSetup">
+            Save this setup for next time
+            <small>This demo stores the latest request on this device only.</small>
+          </label>
+        </div>
+      </section>
+
+      <div class="submit">
+        <button type="submit">Send booking via WhatsApp</button>
+        <button type="button" class="secondary" id="copyBtn">Copy booking details</button>
+        <div id="success" class="success hidden">Booking details copied.</div>
+      </div>
+    </form>
+
+    <div class="footer">
+      Club Racket Service · Stringing, setup advice and convenient collection for club members.
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const setupFields = document.getElementById('setupFields');
+    const adviceFields = document.getElementById('adviceFields');
+    const radios = document.querySelectorAll('input[name="service"]');
+    const copyBtn = document.getElementById('copyBtn');
+    const success = document.getElementById('success');
+
+    function updateFields(){
+      const service = document.querySelector('input[name="service"]:checked').value;
+      const showSetup = service === 'Specific string and tension' || service === 'Use my own string';
+      const showAdvice = service === 'Recommend a setup';
+      setupFields.classList.toggle('hidden', !showSetup);
+      adviceFields.classList.toggle('hidden', !showAdvice);
+    }
+    radios.forEach(r => r.addEventListener('change', updateFields));
+    updateFields();
+
+    const saved = JSON.parse(localStorage.getItem('racketBookingDraft') || 'null');
+    if(saved){
+      ['player','age','contact','brand','model','string','mains','crosses'].forEach(id=>{
+        if(saved[id] && document.getElementById(id)) document.getElementById(id).value=saved[id];
+      });
+    }
+
+    function bookingText(){
+      const data = new FormData(form);
+      const get = key => (data.get(key) || '').toString().trim();
+      const lines = [
+        '🎾 *Racket Stringing Request*',
+        '',
+        `Player: ${get('player')}`,
+        `Age: ${get('age') || '—'}`,
+        `Contact: ${get('contact')}`,
+        `Racket: ${[get('brand'),get('model')].filter(Boolean).join(' ') || '—'}`,
+        `Number of rackets: ${get('racketCount')}`,
+        `Service: ${get('service')}`,
+      ];
+      if(get('string')) lines.push(`String: ${get('string')}`);
+      if(get('mains') || get('crosses')) lines.push(`Tension: ${get('mains') || '—'} mains / ${get('crosses') || '—'} crosses`);
+      if(get('breakFrequency')) lines.push(`Breakage: ${get('breakFrequency')}`);
+      if(get('priority')) lines.push(`Priority: ${get('priority')}`);
+      lines.push(
+        `Needed by: ${get('needed') || 'Flexible'}`,
+        `Handover: ${get('handover')}`,
+        `Notes: ${get('notes') || '—'}`,
+        `Save setup: ${document.getElementById('saveSetup').checked ? 'Yes' : 'No'}`
+      );
+      return lines.join('\n');
+    }
+
+    function saveDraft(){
+      if(!document.getElementById('saveSetup').checked) return;
+      const draft = {};
+      ['player','age','contact','brand','model','string','mains','crosses'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) draft[id] = el.value;
+      });
+      localStorage.setItem('racketBookingDraft', JSON.stringify(draft));
+    }
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!form.reportValidity()) return;
+      saveDraft();
+      const text = bookingText();
+      const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+    });
+
+    copyBtn.addEventListener('click', async ()=>{
+      if(!form.reportValidity()) return;
+      saveDraft();
+      try{
+        await navigator.clipboard.writeText(bookingText());
+        success.classList.remove('hidden');
+        setTimeout(()=>success.classList.add('hidden'), 1800);
+      }catch(e){
+        alert(bookingText());
+      }
+    });
+  </script>
+</body>
+</html>
