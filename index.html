@@ -2,476 +2,347 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111827" />
-  <title>Club Racket Stringing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1726" />
+  <title>Bola Racket Service</title>
   <style>
     :root{
-      --bg:#f4f6f8;
-      --card:#ffffff;
-      --ink:#111827;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --accent:#111827;
-      --soft:#eef2f7;
-      --success:#0f766e;
+      --navy:#0d1726; --navy2:#17263b; --ink:#101828; --muted:#667085;
+      --bg:#f3f5f7; --card:#ffffff; --line:#e2e6ea; --green:#0e7b67;
+      --green-soft:#eaf7f3; --lime:#c8f65a; --gold:#a86a0a; --gold-soft:#fff8e8;
+      --soft:#f7f8fa;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background:var(--bg);
+      background:radial-gradient(circle at top right,rgba(200,246,90,.15),transparent 30%),var(--bg);
       color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
     }
-    .shell{
-      max-width:680px;
-      margin:0 auto;
-      padding:18px 14px 40px;
-    }
+    .app{width:min(100%,720px);margin:0 auto;padding:14px 14px 124px}
     .hero{
-      background:linear-gradient(145deg,#111827,#273244);
-      color:#fff;
-      border-radius:22px;
-      padding:24px 20px;
-      box-shadow:0 12px 30px rgba(17,24,39,.12);
-      margin-bottom:14px;
+      position:relative;overflow:hidden;background:linear-gradient(145deg,var(--navy),var(--navy2));
+      border-radius:28px;padding:26px 21px 23px;color:#fff;box-shadow:0 20px 50px rgba(13,23,38,.18)
     }
-    .eyebrow{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      opacity:.72;
-      margin-bottom:8px;
-      font-weight:700;
+    .hero:after{
+      content:"";position:absolute;width:190px;height:190px;border:38px solid rgba(200,246,90,.08);
+      border-radius:50%;right:-88px;top:-74px
     }
-    h1{
-      font-size:30px;
-      line-height:1.05;
-      margin:0 0 10px;
-      letter-spacing:-.03em;
+    .brand{
+      display:flex;align-items:center;gap:9px;font-size:11px;font-weight:850;letter-spacing:.14em;
+      text-transform:uppercase;color:rgba(255,255,255,.74);margin-bottom:12px;position:relative;z-index:2
     }
-    .hero p{
-      margin:0;
-      color:rgba(255,255,255,.78);
-      line-height:1.45;
-      font-size:15px;
-    }
-    .mini{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-    .pill{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      margin:12px 0;
-      box-shadow:0 4px 14px rgba(17,24,39,.04);
-    }
-    .section-title{
-      font-size:16px;
-      margin:0 0 4px;
-      font-weight:800;
-    }
-    .section-note{
-      color:var(--muted);
-      font-size:13px;
-      margin:0 0 15px;
-      line-height:1.4;
-    }
-    label{
-      display:block;
-      font-size:13px;
-      font-weight:700;
-      margin:14px 0 7px;
-    }
-    input, select, textarea{
-      width:100%;
-      padding:13px 13px;
-      border:1px solid #d7dce2;
-      border-radius:12px;
-      background:#fff;
-      color:var(--ink);
-      font:inherit;
-      outline:none;
-      transition:.15s ease;
-    }
-    input:focus, select:focus, textarea:focus{
-      border-color:#7c8592;
-      box-shadow:0 0 0 3px rgba(17,24,39,.06);
-    }
-    textarea{min-height:92px; resize:vertical}
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-    .choice-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:9px;
-      margin-top:8px;
-    }
-    .choice input{display:none}
-    .choice label{
-      margin:0;
-      min-height:58px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:11px;
-      border:1px solid #d7dce2;
-      border-radius:12px;
-      font-size:13px;
-      font-weight:700;
-      cursor:pointer;
-      background:#fff;
-    }
-    .choice input:checked + label{
-      background:#111827;
-      color:#fff;
-      border-color:#111827;
-    }
-    .switchline{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      margin-top:6px;
-      background:var(--soft);
-      border-radius:12px;
-      padding:12px;
-    }
-    .switchline input{
-      width:18px;
-      height:18px;
-      margin-top:1px;
-      flex:0 0 auto;
-    }
-    .switchline label{
-      margin:0;
-      font-weight:700;
-      line-height:1.35;
-    }
-    .switchline small{
-      display:block;
-      font-weight:400;
-      color:var(--muted);
-      margin-top:2px;
-    }
-    .advice{
-      background:#f8fafc;
-      border-left:4px solid #111827;
-      padding:12px 13px;
-      border-radius:10px;
-      color:#374151;
-      font-size:13px;
-      line-height:1.45;
-      margin-top:12px;
-    }
-    .submit{
-      position:sticky;
-      bottom:10px;
-      margin-top:16px;
-      z-index:5;
-    }
-    button{
-      width:100%;
-      border:0;
-      border-radius:14px;
-      background:#111827;
-      color:#fff;
-      padding:15px 16px;
-      font-size:16px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 10px 22px rgba(17,24,39,.18);
-    }
-    button:active{transform:translateY(1px)}
-    .secondary{
-      margin-top:9px;
-      background:#fff;
-      color:#111827;
-      border:1px solid #d7dce2;
-      box-shadow:none;
-      font-size:14px;
-    }
-    .footer{
-      text-align:center;
-      font-size:12px;
-      color:var(--muted);
-      padding:12px 10px 0;
-      line-height:1.5;
-    }
-    .hidden{display:none}
-    .success{
-      color:var(--success);
-      font-weight:700;
-      font-size:13px;
-      margin-top:10px;
-      text-align:center;
-    }
-    @media(max-width:520px){
-      .row{grid-template-columns:1fr}
-      .choice-grid{grid-template-columns:1fr 1fr}
-      h1{font-size:27px}
-      .hero{padding:21px 18px}
-      .card{padding:16px}
-    }
+    .ball{width:11px;height:11px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(200,246,90,.12)}
+    h1{position:relative;z-index:2;margin:0;max-width:540px;font-size:34px;line-height:1.02;letter-spacing:-.045em;font-weight:900}
+    .hero p{position:relative;z-index:2;margin:12px 0 0;max-width:560px;font-size:14px;line-height:1.48;color:rgba(255,255,255,.76)}
+    .hero-pills{position:relative;z-index:2;margin-top:17px;display:flex;gap:7px;flex-wrap:wrap}
+    .hero-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11);border-radius:999px;padding:7px 9px;font-size:11px;font-weight:760}
+    .intro{margin-top:12px;padding:13px 14px;background:var(--green-soft);border:1px solid #c9e9e0;border-radius:17px;color:#14594e;font-size:13px;line-height:1.42}
+    .card{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:21px;padding:18px;box-shadow:0 6px 22px rgba(16,24,40,.035)}
+    .step{font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:var(--green);margin-bottom:4px}
+    h2{margin:0 0 5px;font-size:20px;line-height:1.1;letter-spacing:-.025em}
+    .sub{margin:0 0 13px;color:var(--muted);font-size:12.5px;line-height:1.42}
+    label.field{display:block;margin:13px 0 6px;font-size:12.5px;font-weight:800}
+    input,select,textarea{width:100%;border:1px solid #d0d5dd;background:#fff;color:var(--ink);border-radius:13px;padding:12.5px 12px;font:inherit;font-size:14px;outline:none;transition:.15s ease}
+    input:focus,select:focus,textarea:focus{border-color:#98a2b3;box-shadow:0 0 0 3px rgba(13,23,38,.055)}
+    textarea{min-height:88px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .quick input{display:none}
+    .quick label{min-height:49px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #d0d5dd;border-radius:13px;padding:9px;font-size:12px;font-weight:820;background:#fff;cursor:pointer}
+    .quick input:checked+label{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .services{display:grid;gap:9px;margin-top:11px}
+    .service input{display:none}
+    .service label{display:block;padding:14px;border:1px solid #d0d5dd;border-radius:16px;background:#fff;cursor:pointer;transition:.14s ease}
+    .service input:checked+label{border:2px solid var(--navy);padding:13px;background:linear-gradient(180deg,#fff,#f8fafc);box-shadow:0 5px 14px rgba(16,24,40,.06)}
+    .service-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .service-name{font-size:14.5px;font-weight:900}
+    .price{font-size:18px;line-height:1;font-weight:950;letter-spacing:-.02em;white-space:nowrap}
+    .service-desc{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.38;padding-right:8px}
+    .tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:850;border-radius:999px;padding:4px 7px;background:var(--green-soft);color:var(--green)}
+    .recommend{background:var(--gold-soft);border:1px solid #f1d9a8;border-radius:14px;padding:11px 12px;margin-top:11px;color:#76500f;font-size:12px;line-height:1.42}
+    .secondary-option{margin-top:14px;padding-top:13px;border-top:1px dashed #d0d5dd}
+    .secondary-title{color:var(--muted);font-size:11px;font-weight:800;margin-bottom:7px}
+    .secondary-option .service label{background:#fafafa}
+    .checkbox{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px;border-radius:13px;background:var(--soft)}
+    .checkbox input{width:18px;height:18px;margin-top:1px;flex:0 0 auto}
+    .checkbox label{font-size:12px;line-height:1.35;font-weight:750}
+    .checkbox span{display:block;color:var(--muted);font-weight:500;margin-top:2px}
+    .summary{margin-top:12px;background:var(--navy);color:#fff;border-radius:18px;padding:15px}
+    .summary-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:850;color:rgba(255,255,255,.62);margin-bottom:8px}
+    .sumline{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .sumline:last-child{border-bottom:0}
+    .sumline span:first-child{color:rgba(255,255,255,.63)}
+    .sumline strong{text-align:right}
+    .sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(243,245,247,0),rgba(243,245,247,.96) 22%,rgba(243,245,247,1));z-index:20}
+    .sticky-inner{width:min(100%,692px);margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:8px}
+    button{border:0;border-radius:15px;padding:15px 15px;font:inherit;font-size:15px;font-weight:900;cursor:pointer}
+    .primary{color:#0d1726;background:var(--lime);box-shadow:0 10px 26px rgba(38,55,23,.18)}
+    .copy{width:54px;background:#fff;border:1px solid #d0d5dd;color:var(--navy);font-size:18px}
+    .footer{padding:17px 6px 0;text-align:center;font-size:10.5px;line-height:1.45;color:var(--muted)}
+    .hidden{display:none!important}
+    .success{margin-top:10px;text-align:center;color:var(--green);font-size:12px;font-weight:800}
+
+    details.privacy{margin-top:12px;border:1px solid #d0d5dd;border-radius:15px;background:#fff;overflow:hidden}
+    details.privacy summary{cursor:pointer;list-style:none;padding:13px 14px;font-size:12.5px;font-weight:850;color:var(--navy);display:flex;align-items:center;justify-content:space-between}
+    details.privacy summary::-webkit-details-marker{display:none}
+    details.privacy summary:after{content:"+";font-size:18px;color:var(--green);font-weight:700}
+    details.privacy[open] summary:after{content:"–"}
+    .privacy-body{padding:0 14px 14px;color:var(--muted);font-size:11.5px;line-height:1.48}
+    .privacy-body strong{color:var(--ink)}
+    .privacy-body p{margin:8px 0}
+    .privacy-body ul{margin:7px 0;padding-left:18px}
+    .privacy-body li{margin:4px 0}
+    .privacy-note{margin-top:10px;padding:10px 11px;border-radius:12px;background:var(--green-soft);color:#14594e;font-size:11.5px;line-height:1.42}
+    .required-consent{background:#fff;border:1px solid #d0d5dd}
+
+    @media(max-width:540px){h1{font-size:31px}.row{grid-template-columns:1fr}.card{padding:16px}.service-desc{padding-right:0}}
   </style>
 </head>
 <body>
-  <main class="shell">
+  <main class="app">
     <section class="hero">
-      <div class="eyebrow">Club Racket Service</div>
-      <h1>Book a restring in under a minute.</h1>
-      <p>Drop off your racket, tell us what you need, and we’ll keep your setup on file for next time.</p>
-      <div class="mini">
-        <span class="pill">Junior friendly</span>
-        <span class="pill">String advice</span>
-        <span class="pill">Drop-off / collection</span>
+      <div class="brand"><span class="ball"></span> Bola Racket Service</div>
+      <div style="position:relative;z-index:2;margin:-4px 0 10px;font-size:12px;font-weight:750;letter-spacing:.04em;color:rgba(255,255,255,.58)">Stringing • Setup • Advice</div>
+      <h1>Your racket, properly set up.</h1>
+      <p>Professional club-side restringing with string and tension advice included. Drop it off, collect it ready to play, and we’ll remember your setup for next time.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">From €30</span>
+        <span class="hero-pill">Junior friendly</span>
+        <span class="hero-pill">String advice included</span>
+        <span class="hero-pill">Same-again setup</span>
       </div>
     </section>
 
+    <div class="intro"><strong>Not sure which string you need?</strong> That’s completely fine. Tell us about the player and we can recommend a suitable string, gauge and tension.</div>
+
     <form id="bookingForm">
       <section class="card">
-        <h2 class="section-title">1. Player details</h2>
-        <p class="section-note">So we know whose racket it is and how to contact you.</p>
-
-        <label for="player">Player name *</label>
-        <input id="player" name="player" required placeholder="e.g. Dylan Cao" />
-
+        <div class="step">Step 1</div>
+        <h2>Who is the racket for?</h2>
+        <p class="sub">Just enough information to identify the player and contact you.</p>
+        <label class="field" for="player">Player name *</label>
+        <input id="player" required placeholder="Player name">
         <div class="row">
           <div>
-            <label for="age">Player age</label>
-            <input id="age" name="age" inputmode="numeric" placeholder="e.g. 15" />
-          </div>
-          <div>
-            <label for="contact">Parent / member contact *</label>
-            <input id="contact" name="contact" required placeholder="Name or mobile number" />
-          </div>
+      <label class="field" for="ageBand">Age group</label>
+      <select id="ageBand">
+        <option value="">Choose</option>
+        <option>Under 10</option>
+        <option>10–12</option>
+        <option>13–15</option>
+        <option>16–17</option>
+        <option>Adult</option>
+      </select>
+    </div>
+          <div><label class="field" for="contact">Contact *</label><input id="contact" required placeholder="Parent/member name or mobile"></div>
         </div>
       </section>
 
       <section class="card">
-        <h2 class="section-title">2. Racket</h2>
-        <p class="section-note">You only need to give us what you know.</p>
-
-        <div class="row">
-          <div>
-            <label for="brand">Brand</label>
-            <input id="brand" name="brand" placeholder="Head, Wilson, Yonex..." />
-          </div>
-          <div>
-            <label for="model">Model</label>
-            <input id="model" name="model" placeholder="e.g. Speed MP" />
-          </div>
-        </div>
-
-        <label for="racketCount">Number of rackets</label>
-        <select id="racketCount" name="racketCount">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4+</option>
-        </select>
-      </section>
-
-      <section class="card">
-        <h2 class="section-title">3. What would you like?</h2>
-        <p class="section-note">If you’re unsure, choose “Recommend for me”.</p>
-
+        <div class="step">Step 2</div>
+        <h2>Do you know your setup?</h2>
+        <p class="sub">Most members can simply choose “recommend for me” or “same again”.</p>
         <div class="choice-grid">
-          <div class="choice">
-            <input type="radio" id="same" name="service" value="Same setup as last time" checked />
-            <label for="same">Same as last time</label>
-          </div>
-          <div class="choice">
-            <input type="radio" id="recommend" name="service" value="Recommend a setup" />
-            <label for="recommend">Recommend for me</label>
-          </div>
-          <div class="choice">
-            <input type="radio" id="own" name="service" value="Use my own string" />
-            <label for="own">I have my own string</label>
-          </div>
-          <div class="choice">
-            <input type="radio" id="specific" name="service" value="Specific string and tension" />
-            <label for="specific">I know my setup</label>
-          </div>
+          <div class="quick"><input type="radio" name="setupMode" id="recommend" value="Recommend for me" checked><label for="recommend">Recommend for me</label></div>
+          <div class="quick"><input type="radio" name="setupMode" id="same" value="Same as last time"><label for="same">Same as last time</label></div>
+          <div class="quick"><input type="radio" name="setupMode" id="know" value="I know my setup"><label for="know">I know my setup</label></div>
+          <div class="quick"><input type="radio" name="setupMode" id="ownmode" value="Customer-supplied string"><label for="ownmode">I have my own string</label></div>
         </div>
 
-        <div id="setupFields" class="hidden">
-          <label for="string">String / gauge</label>
-          <input id="string" name="string" placeholder="e.g. Head Lynx 1.25" />
+        <div id="recommendFields">          <div class="row">
+            <div><label class="field" for="hours">Approx. play per week</label><select id="hours"><option value="">Choose</option><option>1–2 hours</option><option>3–5 hours</option><option>6–9 hours</option><option>10+ hours</option></select></div>
+            <div><label class="field" for="breaks">How often strings break</label><select id="breaks"><option value="">Choose</option><option>Rarely / never</option><option>20+ hours</option><option>10–20 hours</option><option>5–10 hours</option><option>Under 5 hours</option></select></div>
+          </div>
+          <label class="field" for="priority">What matters most?</label>
+          <select id="priority"><option value="">Not sure — please advise</option><option>Comfort / arm friendliness</option><option>Control</option><option>Spin</option><option>Durability</option><option>Power</option></select>
+          <div class="recommend">We don’t automatically put juniors into polyester. The recommendation should suit the player’s age group, playing volume, breakage rate and preferred feel.</div>
+        </div>
 
+        <div id="knownFields" class="hidden">
+          <label class="field" for="string">String / gauge</label>
+          <input id="string" placeholder="e.g. Yonex Poly Tour Pro 1.25">
           <div class="row">
-            <div>
-              <label for="mains">Mains tension</label>
-              <input id="mains" name="mains" placeholder="e.g. 22 kg" />
-            </div>
-            <div>
-              <label for="crosses">Crosses tension</label>
-              <input id="crosses" name="crosses" placeholder="e.g. 22 kg" />
-            </div>
-          </div>
-        </div>
-
-        <div id="adviceFields" class="hidden">
-          <label for="breakFrequency">How often are strings breaking?</label>
-          <select id="breakFrequency" name="breakFrequency">
-            <option value="">Choose one</option>
-            <option>Less than 5 hours</option>
-            <option>5–10 hours</option>
-            <option>10–20 hours</option>
-            <option>Rarely</option>
-            <option>Not sure</option>
-          </select>
-
-          <label for="priority">What matters most?</label>
-          <select id="priority" name="priority">
-            <option value="">Choose one</option>
-            <option>Comfort / arm friendliness</option>
-            <option>Control</option>
-            <option>Spin</option>
-            <option>Durability</option>
-            <option>Power</option>
-            <option>Not sure — please advise</option>
-          </select>
-
-          <div class="advice">
-            For junior players we’ll take age, playing level, breakage rate and comfort into account before recommending a setup.
+            <div><label class="field" for="mains">Mains tension</label><input id="mains" placeholder="e.g. 22 kg"></div>
+            <div><label class="field" for="crosses">Crosses tension</label><input id="crosses" placeholder="e.g. 22 kg"></div>
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h2 class="section-title">4. Timing & collection</h2>
-        <p class="section-note">Tell us when you need the racket back.</p>
-
-        <label for="needed">Needed by</label>
-        <input id="needed" name="needed" type="date" />
-
-        <label for="handover">Handover</label>
-        <select id="handover" name="handover">
-          <option>Drop off at the club</option>
-          <option>Give to Bola after coaching</option>
-          <option>Arrange directly</option>
-        </select>
-
-        <label for="notes">Anything else?</label>
-        <textarea id="notes" name="notes" placeholder="Tournament coming up, arm discomfort, strings moving, breaking in the centre, etc."></textarea>
-
-        <div class="switchline">
-          <input type="checkbox" id="saveSetup" name="saveSetup" checked />
-          <label for="saveSetup">
-            Save this setup for next time
-            <small>This demo stores the latest request on this device only.</small>
-          </label>
+        <div class="step">Step 3</div>
+        <h2>Choose your service</h2>
+        <p class="sub">We can confirm the exact string before restringing.</p>
+        <div class="services">
+          <div class="service"><input type="radio" name="service" id="standard" value="Club Standard – €30"><label for="standard"><div class="service-head"><div><div class="service-name">Club Standard</div><div class="service-desc">Reliable all-round setup for younger juniors, beginners and recreational players.</div><span class="tag">Great everyday choice</span></div><div class="price">€30</div></div></label></div>
+          <div class="service"><input type="radio" name="service" id="comfort" value="Comfort – €32"><label for="comfort"><div class="service-head"><div><div class="service-name">Comfort</div><div class="service-desc">A softer, more arm-friendly setup for developing juniors and players prioritising comfort.</div><span class="tag">Junior friendly</span></div><div class="price">€32</div></div></label></div>
+          <div class="service"><input type="radio" name="service" id="performance" value="Performance – €34" checked><label for="performance"><div class="service-head"><div><div class="service-name">Performance</div><div class="service-desc">For competitive juniors and stronger club players needing more control, spin or durability.</div><span class="tag">Most popular</span></div><div class="price">€34</div></div></label></div>
+          <div class="service"><input type="radio" name="service" id="hybrid" value="Custom Hybrid – €35"><label for="hybrid"><div class="service-head"><div><div class="service-name">Custom Hybrid</div><div class="service-desc">A tailored two-string combination to balance comfort, control and durability.</div><span class="tag">Tailored setup</span></div><div class="price">€35</div></div></label></div>
+        </div>
+        <div class="secondary-option">
+          <div class="secondary-title">Already own a specific string?</div>
+          <div class="service"><input type="radio" name="service" id="customerString" value="Customer-Supplied String – €26"><label for="customerString"><div class="service-head"><div><div class="service-name">Customer-Supplied String</div><div class="service-desc">For players who already own a specific set or reel.</div></div><div class="price">€26</div></div></label></div>
         </div>
       </section>
 
-      <div class="submit">
-        <button type="submit">Send booking via WhatsApp</button>
-        <button type="button" class="secondary" id="copyBtn">Copy booking details</button>
-        <div id="success" class="success hidden">Booking details copied.</div>
-      </div>
+      <section class="card">
+        <div class="step">Step 4</div>
+        <h2>Racket & timing</h2>
+        <p class="sub">Tell us what racket is coming in and when you need it back.</p>
+        <div class="row">
+          <div><label class="field" for="brand">Racket brand</label><input id="brand" placeholder="HEAD, Wilson, Yonex..."></div>
+          <div><label class="field" for="model">Model</label><input id="model" placeholder="e.g. Speed MP"></div>
+        </div>
+        <div class="row">
+          <div><label class="field" for="count">Rackets</label><select id="count"><option>1</option><option>2</option><option>3</option><option>4+</option></select></div>
+          <div><label class="field" for="needed">Needed by</label><input type="date" id="needed"></div>
+        </div>
+        <label class="field" for="handover">Drop-off / collection</label>
+        <select id="handover"><option>Drop off at the club</option><option>Give to Bola after coaching</option><option>Arrange directly with Bola</option></select>
+        <label class="field" for="notes">Anything we should know?</label>
+        <textarea id="notes" placeholder="Tournament coming up, current string, strings moving, frequent breakage, preferred feel, etc."></textarea>
+        <div class="checkbox"><input type="checkbox" id="urgent"><label for="urgent">Priority service (+€5)<span>Where workload allows. We’ll confirm availability before proceeding.</span></label></div>
+        <div class="checkbox"><input type="checkbox" id="saveSetup"><label for="saveSetup">Keep my racket setup on file for future bookings<span>Optional. We’ll retain only the player name, racket, string, gauge, tension, restring date and relevant setup notes for up to 24 months after the last service, unless you ask us to delete it sooner.</span></label></div>
+      </section>
+
+      <section class="card">
+        <div class="step">Privacy</div>
+        <h2>Your information</h2>
+        <p class="sub">We only ask for information needed to manage the racket service and, if you choose, remember the setup for next time.</p>
+
+        <details class="privacy">
+          <summary>Privacy Notice</summary>
+          <div class="privacy-body">
+            <p><strong>Who is responsible?</strong><br>
+            For this booking, Bola, operating Bola Racket Service, is the data controller. You can contact the service through the same WhatsApp conversation used for the booking.</p>
+
+            <p><strong>What we use your information for</strong></p>
+            <ul>
+              <li>to receive and manage the stringing request;</li>
+              <li>to contact you about drop-off, setup questions and collection;</li>
+              <li>to complete and administer the requested racket service; and</li>
+              <li>only if you choose “Keep my racket setup on file”, to make future repeat bookings easier.</li>
+            </ul>
+
+            <p><strong>Legal basis</strong><br>
+            Booking and contact information is processed because it is necessary to take steps at your request and provide/administer the service. Where limited information relates to a player other than the person making the booking, it is used only as necessary to operate and complete that requested racket service. Optional saved setup history is retained only when you choose that feature and can be deleted on request.</p>
+
+            <p><strong>What we collect</strong><br>
+            Player name, age group, parent/member contact, racket details, service request, playing frequency, string-breakage information, string/tension preferences, timing and relevant service notes. Please do not include medical, injury or other sensitive personal information in the notes.</p>
+
+            <p><strong>WhatsApp</strong><br>
+            When you press “Send booking via WhatsApp”, the booking information is transferred to WhatsApp. WhatsApp/Meta processes information under its own terms and privacy arrangements. This webpage does not itself send the booking to a separate Bola Racket Service database.</p>
+
+            <p><strong>How long we keep it</strong><br>
+            Operational booking information should be kept only for as long as reasonably needed to manage the service and any applicable legal/accounting requirements. If you choose to keep your racket setup on file, the limited setup history will be kept for up to <strong>24 months after the last service</strong>, unless you ask for it to be deleted sooner.</p>
+
+            <p><strong>Marketing</strong><br>
+            Booking details will not be used for unrelated promotional or direct-marketing messages unless a separate marketing opt-in is obtained.</p>
+
+            <p><strong>Your rights</strong><br>
+            You may ask to access, correct or delete personal information held by the service, object to or restrict certain processing where applicable, or withdraw an optional saved-setup request. You may also complain to the Irish Data Protection Commission if you believe your data-protection rights have been infringed.</p>
+
+            <div class="privacy-note"><strong>Junior bookings:</strong> where the player is under 16, the booking/contact should be made by a parent, guardian or other responsible adult.</div>
+          </div>
+        </details>
+
+        <div class="checkbox required-consent">
+          <input type="checkbox" id="privacyAck" required>
+          <label for="privacyAck">I have read the Privacy Notice and understand how the booking information will be used.<span>This is an acknowledgement of the notice, not a marketing consent.</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="step">Ready to send</div>
+        <h2>Your booking</h2>
+        <p class="sub">Review the essentials, then send the request through WhatsApp.</p>
+        <div class="summary">
+          <div class="summary-title">Booking summary</div>
+          <div class="sumline"><span>Player</span><strong id="sumPlayer">—</strong></div>
+          <div class="sumline"><span>Setup</span><strong id="sumSetup">Recommend for me</strong></div>
+          <div class="sumline"><span>Service</span><strong id="sumService">Performance – €34</strong></div>
+          <div class="sumline"><span>Racket</span><strong id="sumRacket">—</strong></div>
+          <div class="sumline"><span>Needed</span><strong id="sumNeeded">Flexible</strong></div>
+        </div>
+        <div id="copySuccess" class="success hidden">Booking details copied.</div>
+      </section>
     </form>
 
-    <div class="footer">
-      Club Racket Service · Stringing, setup advice and convenient collection for club members.
-    </div>
+    <div class="footer">Bola Racket Service · Stringing • Setup • Advice</div>
   </main>
 
-  <script>
-    const form = document.getElementById('bookingForm');
-    const setupFields = document.getElementById('setupFields');
-    const adviceFields = document.getElementById('adviceFields');
-    const radios = document.querySelectorAll('input[name="service"]');
-    const copyBtn = document.getElementById('copyBtn');
-    const success = document.getElementById('success');
+  <div class="sticky">
+    <div class="sticky-inner">
+      <button class="primary" type="button" id="whatsappBtn">Send booking via WhatsApp</button>
+      <button class="copy" type="button" id="copyBtn" aria-label="Copy booking">⧉</button>
+    </div>
+  </div>
 
-    function updateFields(){
-      const service = document.querySelector('input[name="service"]:checked').value;
-      const showSetup = service === 'Specific string and tension' || service === 'Use my own string';
-      const showAdvice = service === 'Recommend a setup';
-      setupFields.classList.toggle('hidden', !showSetup);
-      adviceFields.classList.toggle('hidden', !showAdvice);
-    }
-    radios.forEach(r => r.addEventListener('change', updateFields));
-    updateFields();
+<script>
+const form=document.getElementById('bookingForm');
+const recommendFields=document.getElementById('recommendFields');
+const knownFields=document.getElementById('knownFields');
+function current(name){const e=document.querySelector(`input[name="${name}"]:checked`);return e?e.value:''}
+function val(id){return (document.getElementById(id)?.value||'').trim()}
+function updateMode(){
+  const m=current('setupMode');
+  recommendFields.classList.toggle('hidden',m!=='Recommend for me');
+  knownFields.classList.toggle('hidden',m!=='I know my setup'&&m!=='Customer-supplied string');
+  if(m==='Customer-supplied string'){document.getElementById('customerString').checked=true}
+  else if(document.getElementById('customerString').checked){document.getElementById('performance').checked=true}
+  updateSummary()
+}
+function updateSummary(){
+  document.getElementById('sumPlayer').textContent=val('player')||'—';
+  document.getElementById('sumSetup').textContent=current('setupMode')||'—';
+  document.getElementById('sumService').textContent=current('service')||'—';
+  document.getElementById('sumRacket').textContent=[val('brand'),val('model')].filter(Boolean).join(' ')||'—';
+  document.getElementById('sumNeeded').textContent=val('needed')||'Flexible'
+}
+document.querySelectorAll('input[name="setupMode"]').forEach(e=>e.addEventListener('change',updateMode));
+document.querySelectorAll('input[name="service"]').forEach(e=>e.addEventListener('change',updateSummary));
+['player','brand','model','needed'].forEach(id=>document.getElementById(id).addEventListener('input',updateSummary));
+updateMode();
 
-    const saved = JSON.parse(localStorage.getItem('racketBookingDraft') || 'null');
-    if(saved){
-      ['player','age','contact','brand','model','string','mains','crosses'].forEach(id=>{
-        if(saved[id] && document.getElementById(id)) document.getElementById(id).value=saved[id];
-      });
-    }
-
-    function bookingText(){
-      const data = new FormData(form);
-      const get = key => (data.get(key) || '').toString().trim();
-      const lines = [
-        '🎾 *Racket Stringing Request*',
-        '',
-        `Player: ${get('player')}`,
-        `Age: ${get('age') || '—'}`,
-        `Contact: ${get('contact')}`,
-        `Racket: ${[get('brand'),get('model')].filter(Boolean).join(' ') || '—'}`,
-        `Number of rackets: ${get('racketCount')}`,
-        `Service: ${get('service')}`,
-      ];
-      if(get('string')) lines.push(`String: ${get('string')}`);
-      if(get('mains') || get('crosses')) lines.push(`Tension: ${get('mains') || '—'} mains / ${get('crosses') || '—'} crosses`);
-      if(get('breakFrequency')) lines.push(`Breakage: ${get('breakFrequency')}`);
-      if(get('priority')) lines.push(`Priority: ${get('priority')}`);
-      lines.push(
-        `Needed by: ${get('needed') || 'Flexible'}`,
-        `Handover: ${get('handover')}`,
-        `Notes: ${get('notes') || '—'}`,
-        `Save setup: ${document.getElementById('saveSetup').checked ? 'Yes' : 'No'}`
-      );
-      return lines.join('\n');
-    }
-
-    function saveDraft(){
-      if(!document.getElementById('saveSetup').checked) return;
-      const draft = {};
-      ['player','age','contact','brand','model','string','mains','crosses'].forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) draft[id] = el.value;
-      });
-      localStorage.setItem('racketBookingDraft', JSON.stringify(draft));
-    }
-
-    form.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      if(!form.reportValidity()) return;
-      saveDraft();
-      const text = bookingText();
-      const url = 'https://wa.me/?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
-    });
-
-    copyBtn.addEventListener('click', async ()=>{
-      if(!form.reportValidity()) return;
-      saveDraft();
-      try{
-        await navigator.clipboard.writeText(bookingText());
-        success.classList.remove('hidden');
-        setTimeout(()=>success.classList.add('hidden'), 1800);
-      }catch(e){
-        alert(bookingText());
-      }
-    });
-  </script>
+const saved=JSON.parse(localStorage.getItem('clubRacketService')||'null');
+if(saved){
+  ['player','ageBand','contact','brand','model','string','mains','crosses'].forEach(id=>{const e=document.getElementById(id);if(e&&saved[id])e.value=saved[id]});
+  updateSummary()
+}
+function saveDraft(){
+  if(!document.getElementById('saveSetup').checked){
+    localStorage.removeItem('clubRacketService');
+    return;
+  }
+  const o={};['player','ageBand','contact','brand','model','string','mains','crosses'].forEach(id=>{const e=document.getElementById(id);if(e)o[id]=e.value});
+  localStorage.setItem('clubRacketService',JSON.stringify(o))
+}
+function bookingText(){
+  const mode=current('setupMode'), service=current('service');
+  const lines=['🎾 *Bola Racket Service Booking*','',
+    `Player: ${val('player')}`,`Age group: ${val('ageBand')||'—'}`,`Contact: ${val('contact')}`,
+    `Racket: ${[val('brand'),val('model')].filter(Boolean).join(' ')||'—'}`,`Number of rackets: ${val('count')}`,'',
+    `Setup request: ${mode}`,`Service: ${service}`];
+  if(mode==='Recommend for me')lines.push(`Play per week: ${val('hours')||'—'}`,`Breakage: ${val('breaks')||'—'}`,`Priority: ${val('priority')||'Please advise'}`);
+  if(mode==='I know my setup'||mode==='Customer-supplied string')lines.push(`String: ${val('string')||'—'}`,`Tension: ${val('mains')||'—'} mains / ${val('crosses')||'—'} crosses`);
+  lines.push('',`Needed by: ${val('needed')||'Flexible'}`,`Handover: ${val('handover')}`,`Priority service: ${document.getElementById('urgent').checked?'Yes (+€5, subject to confirmation)':'No'}`,`Keep setup on file: ${document.getElementById('saveSetup').checked?'Yes (up to 24 months after last service)':'No'}`,`Notes: ${val('notes')||'—'}`,`Privacy Notice acknowledged: Yes`);
+  return lines.join('\n')
+}
+document.getElementById('whatsappBtn').addEventListener('click',()=>{
+  if(!form.reportValidity())return;
+  saveDraft();
+  window.open('https://wa.me/?text='+encodeURIComponent(bookingText()),'_blank')
+});
+document.getElementById('copyBtn').addEventListener('click',async()=>{
+  if(!form.reportValidity())return;
+  saveDraft();
+  try{
+    await navigator.clipboard.writeText(bookingText());
+    const s=document.getElementById('copySuccess');s.classList.remove('hidden');setTimeout(()=>s.classList.add('hidden'),1600)
+  }catch(e){alert(bookingText())}
+});
+</script>
 </body>
 </html>
