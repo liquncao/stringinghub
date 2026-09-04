@@ -139,6 +139,7 @@
         netlify-honeypot="bot-field">
 
     <input type="hidden" name="form-name" value="bola-stringing-booking">
+    <input type="hidden" name="subject" id="email_subject" data-remove-prefix value="New Bola Stringing Booking">
     <input type="hidden" name="booking_reference" id="booking_reference">
     <input type="hidden" name="submitted_at" id="submitted_at">
     <input type="hidden" name="booking_status" value="Booked">
@@ -421,8 +422,66 @@
   ['player_name','racket_brand','racket_model','needed_by'].forEach(id => document.getElementById(id).addEventListener('input', updateSummary));
   updateMode();
 
-  function encodeForm(data){
-    return new URLSearchParams(data).toString();
+  function addIf(params, key, val){
+    if(val !== undefined && val !== null && String(val).trim() !== ''){
+      params.append(key, String(val).trim());
+    }
+  }
+
+  function buildCleanSubmission(ref){
+    const params = new URLSearchParams();
+    params.append('form-name', 'bola-stringing-booking');
+    params.append('subject', `Bola Stringing Booking — ${ref}`);
+
+    addIf(params, 'booking_reference', ref);
+    addIf(params, 'submitted_at', new Date().toLocaleString('en-IE', {
+      day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
+    }));
+    addIf(params, 'customer_name', value('customer_name'));
+    addIf(params, 'player_name', value('player_name'));
+    addIf(params, 'age_group', value('age_band'));
+    addIf(params, 'mobile', value('mobile'));
+    addIf(params, 'email', value('email'));
+
+    const mode = current('setup_request');
+    addIf(params, 'setup_request', mode);
+
+    if(mode === 'Recommend for me'){
+      addIf(params, 'weekly_play', value('weekly_play'));
+      addIf(params, 'string_breakage', value('breakage'));
+      addIf(params, 'playing_priority', value('playing_priority') || 'Please advise');
+    }
+
+    if(mode === 'I know my setup' || mode === 'Customer-supplied string'){
+      addIf(params, 'requested_string', value('requested_string'));
+      const mains = value('mains_tension');
+      const crosses = value('cross_tension');
+      if(mains || crosses){
+        addIf(params, 'requested_tension', `${mains || '—'} mains / ${crosses || '—'} crosses`);
+      }
+    }
+
+    addIf(params, 'service', current('service'));
+    const racket = [value('racket_brand'), value('racket_model')].filter(Boolean).join(' ');
+    addIf(params, 'racket', racket);
+    addIf(params, 'racket_count', value('racket_count'));
+    addIf(params, 'needed_by', value('needed_by') || 'Flexible');
+    addIf(params, 'handover', value('handover'));
+    addIf(params, 'notes', value('notes'));
+
+    if(document.getElementById('priority_service').checked){
+      addIf(params, 'priority_service', 'Yes (+€5, subject to availability)');
+    }
+    if(document.getElementById('save_setup').checked){
+      addIf(params, 'save_setup', 'Yes');
+    }
+
+    addIf(params, 'privacy_notice', 'Acknowledged');
+
+    const bot = document.querySelector('[name="bot-field"]');
+    if(bot && bot.value) addIf(params, 'bot-field', bot.value);
+
+    return params.toString();
   }
 
   submitBtn.addEventListener('click', async () => {
@@ -435,16 +494,16 @@
     const ref = makeReference();
     document.getElementById('booking_reference').value = ref;
     document.getElementById('submitted_at').value = new Date().toISOString();
+    document.getElementById('email_subject').value = `Bola Stringing Booking — ${ref}`;
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending booking…';
 
     try{
-      const data = new FormData(form);
       const response = await fetch('/', {
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body: encodeForm(data)
+        body: buildCleanSubmission(ref)
       });
 
       if(!response.ok) throw new Error('Submission failed');
