@@ -123,7 +123,7 @@
     <h1>Need a restring? Book it here.</h1>
     <p>Tell us what you need — or simply choose “Recommend for me”. Bola will confirm the setup and price before stringing.</p>
     <div class="hero-pills">
-      <span class="hero-pill">From €30</span>
+      <span class="hero-pill">€25 · €30 · €35</span>
       <span class="hero-pill">Junior friendly</span>
       <span class="hero-pill">Setup advice included</span>
       <span class="hero-pill">Saved for “same again”</span>
@@ -152,6 +152,9 @@
       <h2>Who is the racket for?</h2>
       <p class="sub">Just enough information to identify the booking and contact you.</p>
 
+      <label class="field" for="customer_name">Parent / guardian name (if applicable)</label>
+      <input id="customer_name" name="customer_name" autocomplete="name" placeholder="Optional for adult players">
+
       <label class="field" for="player_name">Player name *</label>
       <input id="player_name" name="player_name" required placeholder="Player name">
 
@@ -162,7 +165,7 @@
     <section class="card">
       <div class="step">Step 2</div>
       <h2>What do you need?</h2>
-      <p class="sub">For most members, “Recommend for me” or “Same as last time” is all we need.</p>
+      <p class="sub">For most members, “Recommend for me” is easiest. Returning customers can simply choose “Same as last time”.</p>
 
       <div class="choice-grid">
         <div class="quick"><input type="radio" name="setup_request" id="recommend" value="Recommend for me" checked><label for="recommend">Recommend for me</label></div>
@@ -178,11 +181,6 @@
           <option>Under 10</option><option>10–12</option><option>13–15</option>
           <option>16–17</option><option>Adult</option>
         </select>
-
-        <div id="parentWrap" class="hidden">
-          <label class="field" for="customer_name">Parent / guardian name</label>
-          <input id="customer_name" name="customer_name" autocomplete="name" placeholder="Parent or guardian">
-        </div>
 
         <div class="row">
           <div>
@@ -201,9 +199,9 @@
           </div>
         </div>
 
-        <label class="field" for="playing_priority">Anything you’re looking for? <span style="font-weight:500;color:var(--muted)">Optional</span></label>
+        <label class="field" for="playing_priority">What matters most?</label>
         <select id="playing_priority" name="playing_priority">
-          <option value="">Not sure — Bola to advise</option>
+          <option value="">Not sure — please advise</option>
           <option>Comfort</option><option>Control</option><option>Spin</option>
           <option>Durability</option><option>Power</option>
         </select>
@@ -214,23 +212,65 @@
       <div id="knownFields" class="hidden">
         <label class="field" for="requested_string">String / gauge</label>
         <input id="requested_string" name="requested_string" placeholder="e.g. Yonex Poly Tour Pro 1.25">
-        <label class="field" for="requested_tension">Tension</label>
-        <input id="requested_tension" name="requested_tension" placeholder="e.g. 22 kg or 22/21 kg">
+        <div class="row">
+          <div><label class="field" for="mains_tension">Mains tension</label><input id="mains_tension" name="mains_tension" placeholder="e.g. 22 kg"></div>
+          <div><label class="field" for="cross_tension">Cross tension</label><input id="cross_tension" name="cross_tension" placeholder="e.g. 22 kg"></div>
+        </div>
       </div>
     </section>
 
-    <div class="intro" style="margin-top:12px">
-      <strong>Stringing €30–€35</strong> · Own string €26 · Priority +€5<br>
-      Bola confirms the setup and price before stringing.
-    </div>
+    <section class="card">
+      <div class="step">Pricing</div>
+      <h2>Simple pricing</h2>
+      <p class="sub">You don’t need to choose the category yourself. Bola will confirm whether your setup is €30 or €35 before stringing.</p>
+
+      <div class="services">
+        <div class="service">
+          <label>
+            <div class="service-head">
+              <div>
+                <div class="service-name">Own String</div>
+                <div class="service-desc">You supply the string; Bola provides the restringing service.</div>
+              </div>
+              <div class="price">€25</div>
+            </div>
+          </label>
+        </div>
+        <div class="service">
+          <label>
+            <div class="service-head">
+              <div>
+                <div class="service-name">Standard Stringing</div>
+                <div class="service-desc">For most junior, recreational and comfort-focused setups.</div>
+                <span class="tag">Most players</span>
+              </div>
+              <div class="price">€30</div>
+            </div>
+          </label>
+        </div>
+        <div class="service">
+          <label>
+            <div class="service-head">
+              <div>
+                <div class="service-name">Performance / Hybrid</div>
+                <div class="service-desc">Performance strings or a tailored hybrid setup.</div>
+              </div>
+              <div class="price">€35</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
 
     <section class="card">
       <div class="step">Step 3</div>
-      <h2>Racket & timing</h2>
-      <p class="sub">Tell us which racket is coming in and roughly when you need it.</p>
+      <h2>Racket & handover</h2>
+      <p class="sub">Tell us which racket is coming in and how you plan to hand it over.</p>
 
-      <label class="field" for="racket">Racket</label>
-      <input id="racket" name="racket" placeholder="e.g. Babolat Pure Drive Team">
+      <div class="row">
+        <div><label class="field" for="racket_brand">Racket brand</label><input id="racket_brand" name="racket_brand" placeholder="HEAD, Wilson, Yonex..."></div>
+        <div><label class="field" for="racket_model">Model</label><input id="racket_model" name="racket_model" placeholder="e.g. Speed MP"></div>
+      </div>
 
       <div class="row">
         <div>
@@ -238,37 +278,24 @@
           <select id="racket_count" name="racket_count"><option>1</option><option>2</option><option>3</option><option>4+</option></select>
         </div>
         <div>
-          <label class="field" for="needed_when">When do you need it?</label>
-          <select id="needed_when" name="needed_when">
-            <option>No rush</option>
-            <option>This week</option>
-            <option>Before my next coaching session</option>
-            <option>Specific date</option>
-          </select>
+          <label class="field">Turnaround</label>
+          <div style="width:100%;border:1px solid #d0d5dd;background:#f7f8fa;color:#101828;border-radius:13px;padding:12.5px 12px;font-size:14px;font-weight:800">
+            1–3 working days
+          </div>
         </div>
       </div>
 
-      <div id="specificDateWrap" class="hidden">
-        <label class="field" for="needed_by">Specific date</label>
-        <input type="date" id="needed_by" name="needed_by">
-      </div>
-
-      <label class="field" for="handover">Drop-off / collection</label>
+      <label class="field" for="handover">Racket handover</label>
       <select id="handover" name="handover">
         <option>Drop off at the club</option><option>Give to Bola after coaching</option><option>Arrange directly with Bola</option>
       </select>
 
-      <button type="button" id="toggleNotes" style="margin-top:14px;background:var(--soft);color:var(--ink);border:1px solid var(--line);padding:11px 12px;font-size:12.5px;text-align:left">
-        + Add a note or special request
-      </button>
-      <div id="notesWrap" class="hidden">
-        <label class="field" for="notes">Anything we should know?</label>
-        <textarea id="notes" name="notes" placeholder="Tournament coming up, current string, strings moving, frequent breakage, preferred feel, etc."></textarea>
-      </div>
+      <label class="field" for="notes">Anything we should know?</label>
+      <textarea id="notes" name="notes" placeholder="Tournament coming up, current string, strings moving, frequent breakage, preferred feel, etc."></textarea>
 
       <div class="checkbox">
         <input type="checkbox" id="priority_service" name="priority_service" value="Yes">
-        <label for="priority_service">Priority service (+€5)<span>Where workload allows. Availability will be confirmed before proceeding.</span></label>
+        <label for="priority_service">Priority service (+€5)<span>Need it sooner than 1–3 working days? Bola will confirm availability.</span></label>
       </div>
 
       <div class="checkbox">
@@ -287,7 +314,7 @@
         <div class="privacy-body">
           <p><strong>Who is responsible?</strong><br>Bola, operating Bola Stringing App, is responsible for the personal information used to manage the booking.</p>
           <p><strong>Why it is used</strong><br>To receive and administer your stringing request, contact you about the job, complete the requested service, and—only if selected—retain limited racket setup history for easier repeat bookings.</p>
-          <p><strong>What is collected</strong><br>Customer/contact details, player name and age group, racket information, stringing preferences, timing and relevant service notes. Please do not enter medical, injury or other sensitive personal information.</p>
+          <p><strong>What is collected</strong><br>Customer/contact details, player name and age group, racket information, stringing preferences, handover details and relevant service notes. Please do not enter medical, injury or other sensitive personal information.</p>
           <p><strong>Storage and service providers</strong><br>The booking is submitted through the website hosting/form service and may be delivered to the service’s booking email inbox. Those providers process data in order to provide the booking and email services.</p>
           <p><strong>Retention</strong><br>Booking information will be kept only as long as reasonably needed for service administration and applicable legal/accounting requirements. Optional saved racket setup history will be retained for up to 24 months after the last service unless deletion is requested sooner.</p>
           <p><strong>Marketing</strong><br>Booking details are not permission for unrelated promotional messages. Any future marketing should use a separate opt-in.</p>
@@ -310,9 +337,18 @@
       <div class="summary">
         <div class="summary-title">Booking summary</div>
         <div class="sumline"><span>Player</span><strong id="sumPlayer">—</strong></div>
-        <div class="sumline"><span>Setup</span><strong id="sumSetup">Recommend for me</strong></div>
-                <div class="sumline"><span>Racket</span><strong id="sumRacket">—</strong></div>
-        <div class="sumline"><span>Needed</span><strong id="sumNeeded">Flexible</strong></div>
+        <div class="sumline"><span>Contact</span><strong id="sumContact">—</strong></div>
+        <div class="sumline"><span>Setup request</span><strong id="sumSetup">Recommend for me</strong></div>
+        <div class="sumline" id="sumRecommendRow"><span>Player profile</span><strong id="sumRecommend">—</strong></div>
+        <div class="sumline hidden" id="sumKnownRow"><span>Requested setup</span><strong id="sumKnown">—</strong></div>
+        <div class="sumline"><span>Price</span><strong id="sumPrice">Bola to confirm (€30 or €35)</strong></div>
+        <div class="sumline"><span>Racket</span><strong id="sumRacket">—</strong></div>
+        <div class="sumline"><span>Quantity</span><strong id="sumCount">1</strong></div>
+        <div class="sumline"><span>Turnaround</span><strong>1–3 working days</strong></div>
+        <div class="sumline"><span>Drop-off</span><strong id="sumHandover">Drop off at the club</strong></div>
+        <div class="sumline"><span>Priority</span><strong id="sumPriority">No</strong></div>
+        <div class="sumline"><span>Save setup</span><strong id="sumSave">No</strong></div>
+        <div class="sumline hidden" id="sumNotesRow"><span>Notes</span><strong id="sumNotes">—</strong></div>
       </div>
       <div id="errorMessage" class="error hidden"></div>
     </section>
@@ -365,34 +401,87 @@
   }
 
   function updateSummary(){
+    const mode = current('setup_request') || 'Recommend for me';
+
     document.getElementById('sumPlayer').textContent = value('player_name') || '—';
-    document.getElementById('sumSetup').textContent = current('setup_request') || '—';
-        if(mode === 'Customer-supplied string'){
-      addIf(params, 'quoted_price', '€26');
+
+    const contactParts = [value('customer_name'), value('mobile')].filter(Boolean);
+    document.getElementById('sumContact').textContent = contactParts.length ? contactParts.join(' · ') : '—';
+
+    document.getElementById('sumSetup').textContent = mode;
+
+    const recommendRow = document.getElementById('sumRecommendRow');
+    const knownRow = document.getElementById('sumKnownRow');
+
+    if(mode === 'Recommend for me'){
+      recommendRow.classList.remove('hidden');
+      knownRow.classList.add('hidden');
+
+      const profile = [];
+      if(value('age_band')) profile.push(value('age_band'));
+      if(value('weekly_play')) profile.push(value('weekly_play') + '/week');
+      if(value('breakage')) profile.push('Breaks: ' + value('breakage'));
+      if(value('playing_priority')) profile.push(value('playing_priority'));
+
+      document.getElementById('sumRecommend').textContent =
+        profile.length ? profile.join(' · ') : 'Bola to advise';
+      document.getElementById('sumPrice').textContent = 'Bola to confirm (€30 or €35)';
+    } else if(mode === 'I know my setup' || mode === 'Customer-supplied string'){
+      recommendRow.classList.add('hidden');
+      knownRow.classList.remove('hidden');
+
+      const setup = [];
+      if(value('requested_string')) setup.push(value('requested_string'));
+
+      const mains = value('mains_tension');
+      const crosses = value('cross_tension');
+      if(mains || crosses){
+        if(mains && crosses && mains !== crosses){
+          setup.push(`${mains} mains / ${crosses} crosses`);
+        } else {
+          setup.push(mains || crosses);
+        }
+      }
+
+      document.getElementById('sumKnown').textContent =
+        setup.length ? setup.join(' · ') : 'To be confirmed';
+
+      document.getElementById('sumPrice').textContent =
+        mode === 'Customer-supplied string' ? '€25' : 'Bola to confirm (€30 or €35)';
     } else {
-      addIf(params, 'quoted_price', 'To be confirmed by Bola');
+      recommendRow.classList.add('hidden');
+      knownRow.classList.add('hidden');
+      document.getElementById('sumPrice').textContent = 'Same as previous booking';
     }
 
-    document.getElementById('sumRacket').textContent = value('racket') || '—';
-    const when = value('needed_when');
-    document.getElementById('sumNeeded').textContent = when === 'Specific date' ? (value('needed_by') || 'Specific date') : (when || 'No rush');
+    const racket = [value('racket_brand'), value('racket_model')].filter(Boolean).join(' ');
+    document.getElementById('sumRacket').textContent = racket || '—';
+    document.getElementById('sumCount').textContent = value('racket_count') || '1';
+    document.getElementById('sumHandover').textContent = value('handover') || '—';
+
+    document.getElementById('sumPriority').textContent =
+      document.getElementById('priority_service').checked ? 'Yes (+€5)' : 'No';
+
+    document.getElementById('sumSave').textContent =
+      document.getElementById('save_setup').checked ? 'Yes' : 'No';
+
+    const notes = value('notes');
+    const notesRow = document.getElementById('sumNotesRow');
+    if(notes){
+      notesRow.classList.remove('hidden');
+      document.getElementById('sumNotes').textContent = notes;
+    } else {
+      notesRow.classList.add('hidden');
+    }
   }
 
-  document.querySelectorAll('input[name="setup_request"]').forEach(el => el.addEventListener('change', updateMode));
-  ['player_name','racket','needed_by'].forEach(id => document.getElementById(id).addEventListener('input', updateSummary));
-  document.getElementById('age_band').addEventListener('change', () => {
-    const age = value('age_band');
-    document.getElementById('parentWrap').classList.toggle('hidden', age === '' || age === 'Adult');
-  });
-  document.getElementById('needed_when').addEventListener('change', () => {
-    document.getElementById('specificDateWrap').classList.toggle('hidden', value('needed_when') !== 'Specific date');
-    updateSummary();
-  });
-  document.getElementById('toggleNotes').addEventListener('click', () => {
-    const wrap = document.getElementById('notesWrap');
-    wrap.classList.toggle('hidden');
-    document.getElementById('toggleNotes').textContent = wrap.classList.contains('hidden') ? '+ Add a note or special request' : '− Hide note';
-  });
+  document.querySelectorAll('input[name="setup_request"]').forEach(el =>
+    el.addEventListener('change', updateMode)
+  );
+
+  form.addEventListener('input', updateSummary);
+  form.addEventListener('change', updateSummary);
+
   updateMode();
 
   function addIf(params, key, val){
@@ -416,6 +505,7 @@
 
     const mode = current('setup_request');
     addIf(params, 'setup_request', mode);
+    addIf(params, 'pricing_structure', 'Own string €25 / Standard €30 / Performance-Hybrid €35');
 
     if(mode === 'Recommend for me'){
       addIf(params, 'age_group', value('age_band'));
@@ -426,19 +516,23 @@
 
     if(mode === 'I know my setup' || mode === 'Customer-supplied string'){
       addIf(params, 'requested_string', value('requested_string'));
-      addIf(params, 'requested_tension', value('requested_tension'));
+      const mains = value('mains_tension');
+      const crosses = value('cross_tension');
+      if(mains || crosses){
+        addIf(params, 'requested_tension', `${mains || '—'} mains / ${crosses || '—'} crosses`);
+      }
     }
 
     if(mode === 'Customer-supplied string'){
-      addIf(params, 'quoted_price', '€26');
+      addIf(params, 'quoted_price', '€25');
     } else {
-      addIf(params, 'quoted_price', 'To be confirmed by Bola');
+      addIf(params, 'quoted_price', '€30 or €35 — to be confirmed by Bola');
     }
 
-    addIf(params, 'racket', value('racket'));
+    const racket = [value('racket_brand'), value('racket_model')].filter(Boolean).join(' ');
+    addIf(params, 'racket', racket);
     addIf(params, 'racket_count', value('racket_count'));
-    addIf(params, 'needed_when', value('needed_when') || 'No rush');
-    if(value('needed_when') === 'Specific date') addIf(params, 'needed_by', value('needed_by'));
+    addIf(params, 'turnaround', '1–3 working days');
     addIf(params, 'handover', value('handover'));
     addIf(params, 'notes', value('notes'));
 
